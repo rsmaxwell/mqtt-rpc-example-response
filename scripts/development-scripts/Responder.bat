@@ -27,18 +27,15 @@ popd
 
 cd %PROJECT_DIR%
 
-set CLASSPATH="%SUBPROJECT_DIR%\build\classes\java\test
-for /R .\mqtt-rpc-response\build\libs %%a in (*.jar) do (
+set CLASSPATH="%SUBPROJECT_DIR%\build\classes\java\main
+for /R .\mqtt-rpc-example-response\build\libs %%a in (*.jar) do (
   set CLASSPATH=!CLASSPATH!;%%a
 )
-for /R .\mqtt-rpc-common\build\libs %%a in (*.jar) do (
-  set CLASSPATH=!CLASSPATH!;%%a
-)
-for /R .\mqtt-rpc-response\runtime %%a in (*.jar) do (
+for /R .\mqtt-rpc-example-response\runtime %%a in (*.jar) do (
   set CLASSPATH=!CLASSPATH!;%%a
 )
 set CLASSPATH=!CLASSPATH!;%SUBPROJECT_DIR%\src\main\resources\log4j2.xml
 set CLASSPATH=!CLASSPATH!"
 
 
-java -classpath %CLASSPATH% com.rsmaxwell.mqtt.rpc.response.Responder --username %MQTT_USERNAME% --password %MQTT_PASSWORD%
+java -classpath %CLASSPATH% com.rsmaxwell.mqtt.rpc.example.response.Responder --username %MQTT_USERNAME% --password %MQTT_PASSWORD%
