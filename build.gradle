@@ -1,7 +1,7 @@
 
 plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'maven-publish'
 }
 
 repositories {
@@ -41,6 +41,35 @@ application {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+ext {
+    projectVersion = project.hasProperty('projectVersion') ? project.getProperty('projectVersion') : "0.0.1-SNAPSHOT"
+    repositoryName = project.hasProperty('repositoryName') ? project.getProperty('repositoryName') : "snapshots"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = projectArtifactId
+            groupId = projectGroupId
+            version = projectVersion
+
+            from components["java"]
+        }
+    }
+
+    repositories {
+        maven {
+            credentials {
+                username = mavenUser
+                password = mavenPassword
+            }
+
+            url = "${mavenRepositoryBaseURL}/${repositoryName}"
+            allowInsecureProtocol = true
+        }
+    }
 }
 
 task getDeps(type: Copy) {
