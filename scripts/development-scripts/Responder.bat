@@ -32,7 +32,7 @@ cd %PROJECT_DIR%
 
 
 set CLASSPATH="
-for /R %SUBPROJECT_DIR%\runtime %%a in (*.jar) do (
+for /R %SUBPROJECT_DIR%\runtime\main %%a in (*.jar) do (
   set CLASSPATH=!CLASSPATH!;%%a
 )
 set CLASSPATH=!CLASSPATH!"

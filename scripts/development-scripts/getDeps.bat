@@ -26,23 +26,27 @@ popd
 
 
 
-cd %SUBPROJECT_DIR%\runtime
+
+
+cd %SUBPROJECT_DIR%
+
+echo on
+
+rd /S /Q runtime 
+
+call %PROJECT_DIR%\gradlew getdeps --warning-mode all
+
+
+
+cd %SUBPROJECT_DIR%\runtime\main
 set scheme=https
 set host=pluto.rsmaxwell.co.uk
 set directory=archiva
 set repository=releases
 set group=com.rsmaxwell.mqtt.rpc.example
 set artifact=mqtt-rpc-example-response
-set version=0.0.1.12
+set version=0.0.1.17
 set filename=mqtt-rpc-example-response
 
 set baseURL=%scheme%://%host%/%directory%
 curl -s %baseURL%/repository/%repository%/%group:.=/%/%artifact%/%version%/%filename%-%version%.jar -o %filename%-%version%.jar
-
-
-
-
-cd %SUBPROJECT_DIR%
-
-echo on
-%PROJECT_DIR%\gradlew :mqtt-rpc-example-response:getdeps --warning-mode all
