@@ -45,7 +45,7 @@ set directory=archiva
 set repository=releases
 set group=com.rsmaxwell.mqtt.rpc.example
 set artifact=mqtt-rpc-example-response
-set version=0.0.1.18
+set version=0.0.1.19
 set filename=mqtt-rpc-example-response
 
 set baseURL=%scheme%://%host%/%directory%
