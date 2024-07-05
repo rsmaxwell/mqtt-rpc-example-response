@@ -5,22 +5,12 @@ package com.rsmaxwell.mqtt.rpc.example.response;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
-import com.rsmaxwell.mqtt.rpc.common.Response;
-import com.rsmaxwell.mqtt.rpc.response.RequestHandler;
 
 class RequestHandlerTest {
 	@Test
 	void appHasAGreeting() {
-		RequestHandler classUnderTest = new RequestHandler() {
-
-			@Override
-			public Response handleRequest(Map<String, Object> args) throws Exception {
-				return null;
-			}
+		Responder classUnderTest = new Responder() {
 		};
 		assertNotNull(classUnderTest, "instance should not be null");
 	}

@@ -19,7 +19,7 @@ import com.rsmaxwell.mqtt.rpc.example.response.handlers.Calculator;
 import com.rsmaxwell.mqtt.rpc.example.response.handlers.GetPages;
 import com.rsmaxwell.mqtt.rpc.example.response.handlers.Quit;
 import com.rsmaxwell.mqtt.rpc.response.MessageHandler;
-import com.rsmaxwell.mqtt.rpc.response.RequestHandler;
+import com.rsmaxwell.mqtt.rpc.response.ResponseHandler;
 
 public class Responder {
 
@@ -34,7 +34,7 @@ public class Responder {
 	static MessageHandler messageHandler;
 
 	static {
-		HashMap<String, RequestHandler> handlers = new HashMap<String, RequestHandler>();
+		HashMap<String, ResponseHandler> handlers = new HashMap<String, ResponseHandler>();
 		handlers.put("calculator", new Calculator());
 		handlers.put("getPages", new GetPages());
 		handlers.put("quit", new Quit());
