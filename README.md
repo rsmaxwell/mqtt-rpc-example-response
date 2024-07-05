@@ -5,18 +5,34 @@ This may be useful in the case of a webapp which needs to subscribe to events, a
 
 It relies on the following dependencies:
 
-    implementation 'com.rsmaxwell.mqtt.rpc:mqtt-rpc-common:0.0.1.5'
-    implementation 'com.rsmaxwell.mqtt.rpc:mqtt-rpc-response:0.0.1.5'
+ 
+```
+repositories {
+    maven {
+        url "https://pluto.rsmaxwell.co.uk/archiva/repository/releases"
+    }
+}
+
+dependencies {
+     ...
+    implementation 'com.rsmaxwell.mqtt.rpc:mqtt-rpc-common:0.0.1.6'
+    implementation 'com.rsmaxwell.mqtt.rpc:mqtt-rpc-response:0.0.1.6'
+}
+```
   
-which are available at the maven repository:
-
-    https://pluto.rsmaxwell.co.uk/archiva/repository/releases
   
-mqtt expects that a mosquitto broker is running to which clients connect and communicate using standard topics
+  
+The lastest version can be found at 
 
-This project implements a couple of requester programs which make simple requests using mqtt-rpc
+```
+https://pluto.rsmaxwell.co.uk/archiva/#artifact~releases/com.rsmaxwell.mqtt.rpc/mqtt-rpc-common
+```
 
-It expects that a matching responder program is also running to listen for requests and respond with a suitable reply.
+mqtt expects that a [Mosquitto](https://mosquitto.org/) broker is running to which clients connect and communicate using standard topics
+
+It expects that matching requester programs will send requests and will handle the responses.
+
+This project contains a Responder which handles a number of simple requests and sends responses back their reply topic
 
 
 ### Structure
@@ -29,12 +45,12 @@ The main Responder program
   * subscribes to a topic listens to which requests will be published.
   * waits forever
 
-When a request is published to the request topic, Messagehandler.messageArrived is called which:
+When a request is published to the request topic, MessageHandler.messageArrived is called which:
 
   * checks the message has a response topic set in its message properties
-  * parses the payload into into a Request 
+  * parses the payload into into a [Request](https://github.com/rsmaxwell/mqtt-rpc-common/blob/main/src/main/java/com/rsmaxwell/mqtt/rpc/common/Request.java) 
   * calls the handler matching the Request.function
-  * parses the response returned by the handler into a Response 
+  * parses the response returned by the handler into a [Response](https://github.com/rsmaxwell/mqtt-rpc-common/blob/main/src/main/java/com/rsmaxwell/mqtt/rpc/common/Response.java)
   * publishes the response to the response topic    
   
 A handler implements the handleRequest method which is given an argument of a map of key/value pairs  
