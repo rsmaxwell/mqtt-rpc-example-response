@@ -1,7 +1,5 @@
 package com.rsmaxwell.mqtt.rpc.example.response;
 
-import java.util.HashMap;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -19,7 +17,6 @@ import com.rsmaxwell.mqtt.rpc.example.response.handlers.Calculator;
 import com.rsmaxwell.mqtt.rpc.example.response.handlers.GetPages;
 import com.rsmaxwell.mqtt.rpc.example.response.handlers.Quit;
 import com.rsmaxwell.mqtt.rpc.response.MessageHandler;
-import com.rsmaxwell.mqtt.rpc.response.ResponseHandler;
 
 public class Responder {
 
@@ -34,12 +31,14 @@ public class Responder {
 	static MessageHandler messageHandler;
 
 	static {
-		HashMap<String, ResponseHandler> handlers = new HashMap<String, ResponseHandler>();
-		handlers.put("calculator", new Calculator());
-		handlers.put("getPages", new GetPages());
-		handlers.put("quit", new Quit());
+		messageHandler = new MessageHandler();
+		messageHandler.putHandler("calculator", new Calculator());
+		messageHandler.putHandler("getPages", new GetPages());
+		messageHandler.putHandler("quit", new Quit());
+	}
 
-		messageHandler = new MessageHandler(handlers);
+	static Option createOption(String shortName, String longName, String argName, String description, boolean required) {
+		return Option.builder(shortName).longOpt(longName).argName(argName).desc(description).hasArg().required(required).build();
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -90,9 +89,5 @@ public class Responder {
 		client_subscriber.disconnect().waitForCompletion();
 
 		logger.info("exiting");
-	}
-
-	static Option createOption(String shortName, String longName, String argName, String description, boolean required) {
-		return Option.builder(shortName).longOpt(longName).argName(argName).desc(description).hasArg().required(required).build();
 	}
 }
