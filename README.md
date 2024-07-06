@@ -15,8 +15,8 @@ repositories {
 
 dependencies {
      ...
-    implementation 'com.rsmaxwell.mqtt.rpc:mqtt-rpc-common:0.0.1.14'
-    implementation 'com.rsmaxwell.mqtt.rpc:mqtt-rpc-response:0.0.1.14'
+    implementation 'com.rsmaxwell.mqtt.rpc:mqtt-rpc-common:+'
+    implementation 'com.rsmaxwell.mqtt.rpc:mqtt-rpc-response:+'
 }
 ```
   
