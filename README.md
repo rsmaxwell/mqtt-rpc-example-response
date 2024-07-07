@@ -1,6 +1,6 @@
 # mqtt-rpc-example-response
 
-This project is an java example of a program to respond to requests made using mqtt-rcp, That is a Remote Procedure Call over mqtt (i.e request/response).
+This project is an java example showing how requests made using mqtt-rcp, That is a Remote Procedure Call over mqtt (i.e request/response).
 This may be useful in the case of a webapp which needs to subscribe to events, and also to handle requests that need a particular  response  
 
 It relies on the following dependencies:
@@ -39,25 +39,27 @@ This project contains a Responder which handles a number of simple requests and 
 
 The main Responder program 
 
-  * loads a map of request handlers keyed on a function string
+  * loads the handlers for all the supported requests
   * connects to an mqtt broker 
   * sets up a MessageHandler as the callback Adapter
-  * subscribes to a topic listens to which requests will be published.
+  * subscribes to a 'request' topic
   * waits forever
 
-When a request is published to the request topic, MessageHandler.messageArrived is called which:
+When a request is published to the request topic, the messageArrived callback is called:
 
   * checks the message has a response topic set in its message properties
   * parses the payload into into a [Request](https://github.com/rsmaxwell/mqtt-rpc-common/blob/main/src/main/java/com/rsmaxwell/mqtt/rpc/common/Request.java) 
-  * calls the handler matching the Request.function
+  * calls the appropriate handler which matching the Request.function
   * parses the response returned by the handler into a [Response](https://github.com/rsmaxwell/mqtt-rpc-common/blob/main/src/main/java/com/rsmaxwell/mqtt/rpc/common/Response.java)
   * publishes the response to the response topic    
-  
-A handler implements the handleRequest method which is given an argument of a map of key/value pairs  
+
+When a handler is called to process a request, it is given an argument of a map of key/value pairs  
 
   * gets arguments out of the map
   * processes the arguments in some way to generate a response
   * returns a response which includes:
+  
     - error code (borrowed from http status values)
     - error message (optional)
-    - response to the request
+    - result to the request
+    
